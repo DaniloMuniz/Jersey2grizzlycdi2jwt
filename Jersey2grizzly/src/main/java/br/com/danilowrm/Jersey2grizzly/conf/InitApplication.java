@@ -5,7 +5,6 @@
  */
 package br.com.danilowrm.Jersey2grizzly.conf;
 
-import br.com.danilowrm.Jersey2grizzly.resource.ProductResourceImpl;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.ApplicationPath;
@@ -23,7 +22,7 @@ public class InitApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        this.resouces.add(ProductResourceImpl.class);
+//        this.resouces.add(ProductResourceCImpl.class);
         return this.resouces;
     }
 

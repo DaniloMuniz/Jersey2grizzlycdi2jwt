@@ -20,6 +20,9 @@ repositories {
 }
 
 dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+    //testCompile group: 'com.h2database', name: 'h2', version: '1.4.199'
     //    compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.27'    
     compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.27'
     compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-grizzly2-http', version: '2.27'
@@ -32,6 +35,9 @@ dependencies {
     compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.moxy', version: '2.6.4'
     compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.7'
     compile group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.2.7'
+    
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
     //    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-jaxb', version :'2.25'
 
     //compile group : 'org.glassfish.jersey.inject', name : 'jersey-hk2', version: '2.26'

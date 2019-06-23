@@ -5,14 +5,14 @@
  */
 package br.com.danilowrm.Jersey2grizzly.conf;
 
-import br.com.danilowrm.Jersey2grizzly.service.ProductService;
-import br.com.danilowrm.Jersey2grizzly.service.ProductServiceImpl;
+import br.com.danilowrm.Jersey2grizzly.service.BookServiceImpl;
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 //import org.glassfish.hk2.utilities.binding.AbstractBinder;
 //import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.jboss.weld.environment.se.Weld;
+import br.com.danilowrm.Jersey2grizzly.service.BookService;
 
 /**
  *
