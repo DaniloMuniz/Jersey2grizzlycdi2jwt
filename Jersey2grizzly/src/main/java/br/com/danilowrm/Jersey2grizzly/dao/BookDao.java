@@ -5,10 +5,24 @@
  */
 package br.com.danilowrm.Jersey2grizzly.dao;
 
+import br.com.danilowrm.Jersey2grizzly.model.Book;
+import java.util.List;
+import java.util.Optional;
+
 /**
  *
  * @author washington-muniz
  */
-public class BookDao extends AbstractDao {
+public interface BookDao {
+
+    Optional<Book> get(int id);
+
+    List<Book> getAll();
+
+    Book add(Book book);
+
+    int update(Book book);
+
+    int delete(int id);
 
 }

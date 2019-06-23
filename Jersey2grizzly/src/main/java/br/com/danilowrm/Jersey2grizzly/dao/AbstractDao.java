@@ -15,5 +15,6 @@ import javax.inject.Inject;
 public class AbstractDao {
 
     @Inject
-    private Connection connection;
+    Connection connection;
+
 }

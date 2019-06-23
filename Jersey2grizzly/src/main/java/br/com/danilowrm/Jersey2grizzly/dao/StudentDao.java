@@ -5,10 +5,24 @@
  */
 package br.com.danilowrm.Jersey2grizzly.dao;
 
+import br.com.danilowrm.Jersey2grizzly.model.Student;
+import java.util.List;
+import java.util.Optional;
+
 /**
  *
  * @author washington-muniz
  */
-public class StudentDao extends AbstractDao {
+public interface StudentDao {
+
+    Optional<Student> get(int id);
+
+    List<Student> getAll();
+
+    Student add(Student student);
+
+    int update(Student student);
+
+    int delete(int id);
 
 }

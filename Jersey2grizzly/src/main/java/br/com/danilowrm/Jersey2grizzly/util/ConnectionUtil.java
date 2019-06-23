@@ -9,7 +9,12 @@ import br.com.danilowrm.Jersey2grizzly.dao.factory.ConnectionFactoryProducer;
 import br.com.danilowrm.Jersey2grizzly.dao.factory.Database;
 import br.com.danilowrm.Jersey2grizzly.dao.factory.InformationDatabase;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 
 /**
@@ -21,6 +26,7 @@ public class ConnectionUtil {
     private InformationDatabase informationDatabase;
 
     @Produces
+    @RequestScoped
     public Connection getConnection() {
         boolean enabledConnectionPooling = true;
         Database database = Database.from("mysql");
@@ -29,6 +35,16 @@ public class ConnectionUtil {
                 .getFactory(enabledConnectionPooling)
                 .getConnection(database, informationDatabase);
         return connection.orElseThrow(() -> new RuntimeException("Error while trying to connect to database."));
+    }
+
+    public void close(@Disposes Connection connection) {
+        try {
+            if (!connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
