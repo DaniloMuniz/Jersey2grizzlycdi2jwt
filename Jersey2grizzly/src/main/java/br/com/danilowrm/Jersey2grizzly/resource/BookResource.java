@@ -5,6 +5,7 @@
  */
 package br.com.danilowrm.Jersey2grizzly.resource;
 
+import br.com.danilowrm.Jersey2grizzly.model.Book;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -25,18 +26,20 @@ public interface BookResource {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON + "; chaset=utf8", MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN})
-    @Consumes({MediaType.APPLICATION_JSON + "; chaset=utf8", MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN})
+    @Path("{id}")
     Response get(@PathParam("id") Integer id);
 
     @POST
     @Consumes({MediaType.APPLICATION_JSON + "; chaset=utf8", MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN})
-    Response create();
+    Response create(Book book);
 
     @PUT
     @Produces({MediaType.APPLICATION_JSON + "; chaset=utf8", MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN})
-    Response update(@PathParam("name") String name);
+    @Path("{id}")
+    Response update(@PathParam("id") Integer id, Book book);
 
     @DELETE
-    Response delete();
+    @Path("{id}")
+    Response delete(@PathParam("id") Integer id);
 
 }

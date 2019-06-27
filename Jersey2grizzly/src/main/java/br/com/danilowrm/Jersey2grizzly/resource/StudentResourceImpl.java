@@ -6,15 +6,12 @@
 package br.com.danilowrm.Jersey2grizzly.resource;
 
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
-import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 /**
  *
  * @author washington-muniz
  */
-@Named
 @RequestScoped
 public class StudentResourceImpl implements StudentResource {
 

@@ -6,6 +6,7 @@
 package br.com.danilowrm.Jersey2grizzly.service;
 
 import br.com.danilowrm.Jersey2grizzly.model.Book;
+import java.util.List;
 
 /**
  *
@@ -13,6 +14,14 @@ import br.com.danilowrm.Jersey2grizzly.model.Book;
  */
 public interface BookService {
 
-    Book getById(Integer id);
+    Book getById(int id);
+
+    List<Book> getAll();
+
+    int add(Book book);
+
+    void update(Book book);
+
+    void delete(int id);
 
 }

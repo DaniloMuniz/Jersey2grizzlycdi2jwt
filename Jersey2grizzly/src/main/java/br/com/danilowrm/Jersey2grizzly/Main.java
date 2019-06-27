@@ -6,6 +6,8 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 import java.io.IOException;
 import java.net.URI;
+import org.glassfish.grizzly.http.server.NetworkListener;
+import org.glassfish.grizzly.threadpool.ThreadPoolConfig;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -39,10 +41,19 @@ public class Main {
                 .register(MoxyXmlFeature.class)
                 .register(MultiPartFeature.class);
 //                .register(new WebServiceBinderCDI());
-
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI
-        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
+//        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
+        HttpServer httpServer = GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
+        // create the thread pool configuration 
+        // reconfigure the thread pool 
+        NetworkListener listener = httpServer.getListeners().iterator().next();
+        ThreadPoolConfig thx = listener.getTransport().getWorkerThreadPoolConfig(); // no thx a gente epode configurar um monte de coisas!!! 
+        thx.setCorePoolSize(10);
+        thx.setMaxPoolSize(300);
+//                    GrizzlyExecutorService threadPool = (GrizzlyExecutorService) listener.getTransport().getWorkerThreadPool(); 
+//                   threadPool.reconfigure(config); 
+        return httpServer;
     }
 
     /**

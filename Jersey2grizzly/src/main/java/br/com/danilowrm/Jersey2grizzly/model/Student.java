@@ -20,4 +20,13 @@ public class Student {
     private LocalDate birthday;
     private School school;
 
+    /**
+     * method get safe school id.
+     *
+     * @return return -1 if school null, else id int.
+     */
+    public int getSchoolId() {
+        return (this.school != null) ? this.school.getId() : -1;
+    }
+
 }

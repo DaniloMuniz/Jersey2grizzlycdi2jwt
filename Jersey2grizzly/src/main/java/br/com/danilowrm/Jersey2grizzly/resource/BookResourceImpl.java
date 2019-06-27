@@ -5,37 +5,90 @@
  */
 package br.com.danilowrm.Jersey2grizzly.resource;
 
+import br.com.danilowrm.Jersey2grizzly.model.Book;
+import br.com.danilowrm.Jersey2grizzly.service.BookService;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
-import javax.ws.rs.Path;
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
+import static javax.ws.rs.core.Response.ok;
+import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
+import static javax.ws.rs.core.Response.created;
+import static javax.ws.rs.core.Response.noContent;
+import static javax.ws.rs.core.Response.serverError;
+import static javax.ws.rs.core.Response.status;
 
 /**
  *
  * @author washington-muniz
  */
-@Named
 @RequestScoped
 public class BookResourceImpl implements BookResource {
 
+    @Inject
+    BookService bookService;
+
     @Override
     public Response get(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Book> books = new ArrayList<>();
+        try {
+            if (id != null) {
+                Book book = bookService.getById(id);
+                if (book == null) {
+                    return noContent().build();
+                }
+                return ok().entity(book).build();
+            }
+
+            books = bookService.getAll();
+            if (books == null) {
+                return noContent().build();
+            }
+        } catch (Exception ex) {
+            return serverError().entity("Fail in service").build();
+        }
+        return ok().entity(books).build();
+
     }
 
     @Override
-    public Response create() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Response create(Book book) {
+        int idBook = 0;
+        try {
+            idBook = bookService.add(book);
+            if (idBook <= 0) {
+                return status(BAD_REQUEST).entity("Fail in service").build();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return serverError().entity("Fail in service").build();
+        }
+        URI location = URI.create("/books/" + idBook);
+        return created(location).build();
     }
 
     @Override
-    public Response update(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Response update(Integer id, Book book) {
+        try {
+            bookService.update(book);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return serverError().entity("Fail in service").build();
+        }
+        return ok().build();
     }
 
     @Override
-    public Response delete() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Response delete(Integer id) {
+        try {
+            bookService.delete(id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return serverError().entity("Fail in service").build();
+        }
+        return noContent().build();
     }
 
 }

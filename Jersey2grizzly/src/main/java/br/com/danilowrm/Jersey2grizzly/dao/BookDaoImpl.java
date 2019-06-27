@@ -18,11 +18,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.ApplicationScoped;
 
 /**
  *
  * @author washington-muniz
  */
+@ApplicationScoped
 public class BookDaoImpl extends AbstractDao implements BookDao {
 
     public Optional<Book> get(int id) {

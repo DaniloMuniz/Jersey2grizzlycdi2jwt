@@ -5,21 +5,46 @@
  */
 package br.com.danilowrm.Jersey2grizzly.service;
 
+import br.com.danilowrm.Jersey2grizzly.dao.BookDao;
 import br.com.danilowrm.Jersey2grizzly.model.Book;
+import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
+import javax.inject.Inject;
 
 /**
  *
  * @author washington-muniz
  */
-@Named
 @ApplicationScoped
 public class BookServiceImpl implements BookService {
 
+    @Inject
+    BookDao bookDao;
+
     @Override
-    public Book getById(Integer id) {
-        return new Book();
+    public Book getById(int id) {
+        return this.bookDao.get(id).orElse(new Book());
+    }
+
+    @Override
+    public List<Book> getAll() {
+        return this.bookDao.getAll();
+    }
+
+    @Override
+    public int add(Book book) {
+        book = this.bookDao.add(book);
+        return book.getId();
+    }
+
+    @Override
+    public void update(Book book) {
+        this.bookDao.update(book);
+    }
+
+    @Override
+    public void delete(int id) {
+        this.bookDao.delete(id);
     }
 
 }

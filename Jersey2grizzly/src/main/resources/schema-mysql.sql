@@ -46,3 +46,65 @@ CREATE TABLE `appws`.`N05_Book` (
           REFERENCES `appws`.`N02_Category` (`id`)
           ON DELETE NO ACTION
           ON UPDATE NO ACTION);
+-- UPDATE `appws`.`N01_Autor` SET `name` = 'Amanda Silva' WHERE (`id` = '2');
+/*INSERT INTO `appws`.`N02_Category`
+(`name`)
+VALUES
+('Fantasia');
+INSERT INTO `appws`.`N02_Category`
+(`name`)
+VALUES
+('Ação');
+INSERT INTO `appws`.`N02_Category`
+(`name`)
+VALUES
+('Terror');
+INSERT INTO `appws`.`N02_Category`
+(`name`)
+VALUES
+('Tecnologia');
+INSERT INTO `appws`.`N05_Book`
+(`name`,
+`publication`,
+`id_autor`,
+`id_category`)
+VALUES(
+'Book 1',
+'2019-06-01',
+1,
+3);
+
+INSERT INTO `appws`.`N05_Book`
+(`name`,
+`publication`,
+`id_autor`,
+`id_category`)
+VALUES(
+'Book 2',
+'2019-06-01',
+1,
+3);
+
+INSERT INTO `appws`.`N05_Book`
+(`name`,
+`publication`,
+`id_autor`,
+`id_category`)
+VALUES(
+'Book 4',
+'2019-06-01',
+1,
+3);
+
+INSERT INTO `appws`.`N05_Book`
+(`name`,
+`publication`,
+`id_autor`,
+`id_category`)
+VALUES(
+'Book 5',
+'2019-06-01',
+1,
+3);
+
+*/

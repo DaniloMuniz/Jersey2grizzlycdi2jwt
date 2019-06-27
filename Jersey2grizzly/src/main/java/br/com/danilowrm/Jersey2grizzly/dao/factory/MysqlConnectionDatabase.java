@@ -21,12 +21,12 @@ public class MysqlConnectionDatabase implements IConnectionDatabase {
     public Optional<Connection> connection(InformationDatabase informationDatabase) {
         Optional<Connection> connection = Optional.empty();
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = Optional.of(DriverManager.getConnection(
                     "jdbc:mysql://" + informationDatabase.getServerName() + ":"
                     + informationDatabase.getPortNumber() + "/"
                     + informationDatabase.getDatabaseName(),
-                    informationDatabase.getServerName(),
+                    informationDatabase.getUser(),
                     informationDatabase.getPassword()));
         } catch (Exception e) {
             e.printStackTrace();
