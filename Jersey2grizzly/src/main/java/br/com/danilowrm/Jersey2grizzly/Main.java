@@ -1,11 +1,14 @@
 package br.com.danilowrm.Jersey2grizzly;
 
+import com.google.common.flogger.FluentLogger;
+import com.google.common.flogger.LoggerConfig;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.logging.Level;
 import org.glassfish.grizzly.http.server.NetworkListener;
 import org.glassfish.grizzly.threadpool.GrizzlyExecutorService;
 import org.glassfish.grizzly.threadpool.ThreadPoolConfig;
@@ -19,6 +22,8 @@ import org.glassfish.jersey.moxy.xml.MoxyXmlFeature;
  *
  */
 public class Main {
+
+    private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
     // Base URI the Grizzly HTTP server will listen on
     public static final String BASE_URI = "http://localhost:8080/myapp/";
@@ -65,8 +70,11 @@ public class Main {
      */
     public static void main(String[] args) throws IOException, InterruptedException {
         final HttpServer server = startServer();
-        System.out.println(String.format("Jersey app started with WADL available at "
-                + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
+        LoggerConfig.of(logger).setLevel(Level.INFO);
+        LoggerConfig.getPackageConfig(Main.class);
+        logger.atInfo().log("Jersey app started with WADL available at "
+                + "%sapplication.wadl\nHit enter to stop it...", BASE_URI
+        );
         System.in.read();
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             @Override

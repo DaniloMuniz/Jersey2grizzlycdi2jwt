@@ -20,6 +20,9 @@ import static javax.ws.rs.core.Response.noContent;
 import static javax.ws.rs.core.Response.serverError;
 import static javax.ws.rs.core.Response.status;
 
+import com.google.common.flogger.FluentLogger;
+import static com.google.common.flogger.StackSize.SMALL;
+
 /**
  *
  * @author washington-muniz
@@ -27,11 +30,14 @@ import static javax.ws.rs.core.Response.status;
 @RequestScoped
 public class BookResourceImpl implements BookResource {
 
+    private static final FluentLogger logger = FluentLogger.forEnclosingClass();
+
     @Inject
     BookService bookService;
 
     @Override
     public Response get(Integer id) {
+        logger.atInfo().log("book resource impl begin.");
         List<Book> books = new ArrayList<>();
         try {
             if (id != null) {
@@ -47,6 +53,7 @@ public class BookResourceImpl implements BookResource {
                 return noContent().build();
             }
         } catch (Exception ex) {
+            logger.atSevere().withStackTrace(SMALL).log("Fail in service");
             return serverError().entity("Fail in service").build();
         }
         return ok().entity(books).build();
@@ -62,7 +69,7 @@ public class BookResourceImpl implements BookResource {
                 return status(BAD_REQUEST).entity("Fail in service").build();
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.atSevere().withStackTrace(SMALL).log("Fail in service");
             return serverError().entity("Fail in service").build();
         }
         URI location = URI.create("/books/" + idBook);
@@ -74,7 +81,7 @@ public class BookResourceImpl implements BookResource {
         try {
             bookService.update(book);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.atSevere().withStackTrace(SMALL).log("Fail in service");
             return serverError().entity("Fail in service").build();
         }
         return ok().build();
@@ -85,7 +92,7 @@ public class BookResourceImpl implements BookResource {
         try {
             bookService.delete(id);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.atSevere().withStackTrace(SMALL).log("Fail in service");
             return serverError().entity("Fail in service").build();
         }
         return noContent().build();

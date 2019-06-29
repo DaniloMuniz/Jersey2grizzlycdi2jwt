@@ -5,6 +5,8 @@
  */
 package br.com.danilowrm.Jersey2grizzly.resource;
 
+import br.com.danilowrm.Jersey2grizzly.model.Book;
+import br.com.danilowrm.Jersey2grizzly.model.Student;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.Response;
 
@@ -21,17 +23,17 @@ public class StudentResourceImpl implements StudentResource {
     }
 
     @Override
-    public Response create() {
+    public Response create(Student student) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Response update(String name) {
+    public Response update(Integer id, Student student) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Response delete() {
+    public Response delete(Integer id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
