@@ -7,6 +7,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import java.io.IOException;
 import java.net.URI;
 import org.glassfish.grizzly.http.server.NetworkListener;
+import org.glassfish.grizzly.threadpool.GrizzlyExecutorService;
 import org.glassfish.grizzly.threadpool.ThreadPoolConfig;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.logging.LoggingFeature;
@@ -50,9 +51,9 @@ public class Main {
         NetworkListener listener = httpServer.getListeners().iterator().next();
         ThreadPoolConfig thx = listener.getTransport().getWorkerThreadPoolConfig(); // no thx a gente epode configurar um monte de coisas!!! 
         thx.setCorePoolSize(10);
-        thx.setMaxPoolSize(300);
-//                    GrizzlyExecutorService threadPool = (GrizzlyExecutorService) listener.getTransport().getWorkerThreadPool(); 
-//                   threadPool.reconfigure(config); 
+        thx.setMaxPoolSize(500);
+        GrizzlyExecutorService threadPool = (GrizzlyExecutorService) listener.getTransport().getWorkerThreadPool();
+        threadPool.reconfigure(thx);
         return httpServer;
     }
 
