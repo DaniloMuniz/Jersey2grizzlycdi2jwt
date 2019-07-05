@@ -8,14 +8,19 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.glassfish.grizzly.http.server.NetworkListener;
 import org.glassfish.grizzly.threadpool.GrizzlyExecutorService;
 import org.glassfish.grizzly.threadpool.ThreadPoolConfig;
+import org.glassfish.jersey.grizzly2.servlet.GrizzlyWebContainerFactory;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.moxy.xml.MoxyXmlFeature;
+import org.glassfish.jersey.servlet.ServletContainer;
 
 /**
  * Main class.
@@ -34,7 +39,7 @@ public class Main {
      *
      * @return Grizzly HTTP server.
      */
-    public static HttpServer startServer() {
+    public static HttpServer startServer() throws IOException {
         // create a resource config that scans for JAX-RS resources and providers
         // in com.example package
         final ResourceConfig rc = new ResourceConfig()
@@ -42,7 +47,8 @@ public class Main {
                         .currentThread()
                         .getContextClassLoader())
                 .packages("br.com.danilowrm.Jersey2grizzly")
-                .register(LoggingFeature.class)
+                .register(new LoggingFeature(Logger.getGlobal(),
+                        LoggingFeature.Verbosity.PAYLOAD_ANY))
                 .register(JacksonFeature.class)
                 .register(MoxyXmlFeature.class)
                 .register(MultiPartFeature.class);
@@ -50,7 +56,12 @@ public class Main {
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI
 //        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
-        HttpServer httpServer = GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
+//        HttpServer httpServer = GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
+        Map<String, String> initParams = new LinkedHashMap<>();
+        Map<String, String> contextInitParams = new LinkedHashMap<>();
+        HttpServer httpServer = GrizzlyWebContainerFactory.create(URI.create(BASE_URI), 
+                new ServletContainer(rc),
+                initParams, contextInitParams);
         // create the thread pool configuration 
         // reconfigure the thread pool 
         NetworkListener listener = httpServer.getListeners().iterator().next();

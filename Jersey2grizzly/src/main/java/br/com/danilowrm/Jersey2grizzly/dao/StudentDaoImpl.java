@@ -5,9 +5,6 @@
  */
 package br.com.danilowrm.Jersey2grizzly.dao;
 
-import br.com.danilowrm.Jersey2grizzly.model.Autor;
-import br.com.danilowrm.Jersey2grizzly.model.Book;
-import br.com.danilowrm.Jersey2grizzly.model.Category;
 import br.com.danilowrm.Jersey2grizzly.model.School;
 import br.com.danilowrm.Jersey2grizzly.model.Student;
 import java.sql.PreparedStatement;
@@ -20,7 +17,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.ApplicationScoped;
 
 /**
  *
